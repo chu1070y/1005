@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 id="display"></h2>
+
+<button id="b1">HIGH</button>
+<button id="b2">LOW</button>
+
+<script>
+    //var display = document.querySelector("#display");
+
+    function box(tag) {
+
+        var target = document.querySelector(tag);
+
+        var current = 0;
+
+        function high() {
+            current++;
+            target.innerHTML = current;
+        }
+
+        function low() {
+            current--;
+            target.innerHTML = current;
+        }
+
+        //함수를 외부로 호출한다.
+        return {high:high, low:low};
+
+    }
+
+    var v1 = box("#display");
+
+    console.log(v1);
+
+    document.querySelector("#b1")
+        .addEventListener("click",v1.high,false);
+
+    document.querySelector("#b2")
+        .addEventListener("click",v1.low,false);
+
+</script>
+
+</body>
+</html>

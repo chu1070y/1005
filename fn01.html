@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="b1">CLICK</button>
+
+<script>
+
+    var b1 = document.querySelector("#b1");
+
+    b1.addEventListener("click,function()")
+
+    //일반 함수 선언
+
+    //내부 함수 선언
+
+    function outer() {
+
+        var total = 0;
+
+        //바깥쪽에서 inner함수를 호출할 수 없다. 즉, inner 함수는 private 기능이라고 생각하면 된다.
+        function inner() {
+            total++;
+            console.log(total);
+        }
+
+        inner();
+        inner();
+        inner();
+        inner();
+
+    }
+
+    outer(); //객체와 같이 값을 저장해 출력한다.
+    //파라미터 전달
+
+    //리턴 타입
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<style>
+    .off{
+        text-decoration: line-through;
+    }
+</style>
+
+<div class="container">
+    <div class="todoList">
+        <div class="inputPart" onkeyup="enterkey()">
+            <input type="text" id="inputTodoList" value="">
+        </div>
+        <div class="listPart"></div>
+    </div>
+</div>
+
+<script>
+    function enterkey() {
+        if(window.event.keyCode == 13){
+            createList();
+        }
+    }
+
+
+
+    function find(selector) {
+        return document.querySelector(selector);
+    }
+
+
+    function createList() {
+
+        var ul = document.createElement("ul");
+        var idx = 0;
+        var inputValue = document.querySelector("#inputTodoList").value;
+
+        ul.innerHTML = "<input type='checkbox' id='list"+ idx +"'/>" + inputValue;
+
+        if (inputValue === '') {
+            alert("할일을 입력해주세요");
+        }else {
+            document.querySelector(".listPart").appendChild(ul);
+        }
+
+        document.querySelector("#inputTodoList").value = "";
+
+        search();
+
+        function search() {
+            var checkbox = document.getElementById ("#list"+idx);
+            if (checkbox.addEventListener) {
+                checkbox.addEventListener ("CheckboxStateChange", OnChangeCheckbox, false);
+            }
+        }
+
+        function OnChangeCheckbox (event) {
+            var checkbox = event.target;
+            if (checkbox.checked) {
+                checkbox.setAttribute("class","off");
+            }
+        }
+        idx++;
+    }
+
+</script>
+
+</body>
+</html>

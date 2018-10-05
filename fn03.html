@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- 지도를 표시할 div 입니다 -->
+<div id="map" style="width:100%;height:50vh;"></div>
+
+<style>
+    .wrapper{
+        color: white;
+        display: flex;
+        width: 100%;
+        height: 50vh;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.86);
+    }
+
+    .listUL{
+        list-style: none;
+        color: white;
+        font-size: 2em;
+    }
+
+    .listUL li{
+        border: 1px solid white;
+    }
+
+
+</style>
+
+<div class="wrapper">
+    <ul class="listUL">
+
+    </ul>
+</div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0bf612a8ab63ef21e81421b961f584f3"></script>
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.570400, 126.984827), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+</script>
+
+<script src="store.js"></script>
+
+    <script>
+
+        dao.getList(function (stores) {
+
+            var listUL = document.querySelector(".listUL");
+            var str = '';
+            var idx = 0;
+
+            for(var store of stores){
+                str += "<li data-idx='" + idx++ + "'>" + store.title + "</li>";
+            }
+            listUL.innerHTML = str;
+        });
+
+        // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+        daum.maps.event.addListener(map, 'dragend', function() {
+
+            // 지도 중심좌표를 얻어옵니다
+            var latlng = map.getCenter();
+
+            var nnstore = dao.findNNStore({lat:latlng.jb, lng:latlng.ib});
+
+            console.log(nnstore);
+
+        });
+
+
+
+        //버블링을 할거라 false를 준다.
+        document.querySelector(".listUL").addEventListener("click",
+            function (e) {
+                // console.log(e.target.getAttribute("data-idx"));
+                var idx = e.target.getAttribute("data-idx");
+                dao.showMarker(idx);
+                } ,false);
+
+        console.log(dao);
+
+    </script>
+
+</body>
+</html>
